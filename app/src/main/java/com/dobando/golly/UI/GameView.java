@@ -14,7 +14,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder holder;
     private RenderThread renderThread;
     private boolean isDraw = false;// 控制绘制的开关
-	private Land land = new Land();
+	private Land land;
 
     public GameView(Context context) {
         super(context);
@@ -31,6 +31,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         isDraw = true;
+		land = new Land(MainActivity.width/16);
         renderThread.start();
 
     }
@@ -53,9 +54,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             // 不停绘制界面
             while (isDraw) {
                 drawUI();
+				land.renovateLand();
 				try
 				{
-					this.sleep(20);
+					this.sleep(500);
 				}
 				catch (InterruptedException e)
 				{}
@@ -88,16 +90,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         //设置画笔颜色
         paint.setColor(Color.YELLOW);
         //设置画笔样式
-        paint.setStyle(Paint.Style.STROKE);
-		for(int i = 0;i < 30;i++){
-			for(int j = 0;j < 30;j++){
+        //paint.setStyle(Paint.Style.STROKE);
+		for(int i = 0;i < land.LAND_SIZE;i++){
+			for(int j = 0;j < land.LAND_SIZE;j++){
 				if(land.getCell(i,j).getState()==1){
-					paint.setColor(Color.RED);
-					canvas.drawRect(i*16,j*16,16,16,paint);
+					paint.setColor(Color.BLACK);
+					canvas.drawRect(i*16,j*16,i*16+16,j*16+16,paint);
 					}
 				else{
-					paint.setColor(Color.YELLOW);
-					canvas.drawRect(i*16,j*16,16,16,paint);
+					paint.setColor(Color.WHITE);
+					canvas.drawRect(i*16,j*16,i*16+16,j*16+16,paint);
+					
 				}
 			}
 		}

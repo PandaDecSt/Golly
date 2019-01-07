@@ -1,13 +1,16 @@
 package com.dobando.golly.Game;
 
+import com.dobando.golly.MainActivity;
 //陆地(细胞的生存空间)
 public class Land
 {
-	final int LAND_SIZE = 30;
+	public int LAND_SIZE;
 	//二维矩阵-生存空间
-	public Cell[][] land = new Cell[LAND_SIZE][LAND_SIZE];
+	public Cell[][] land;
 	
-	public Land(){
+	public Land(int size){
+		this.LAND_SIZE = size;
+		land = new Cell[LAND_SIZE][LAND_SIZE];
 		initializeLand();
 	}
 	
@@ -38,9 +41,12 @@ public class Land
 	
 	public int getCellCount(int posX,int posY){
 		int count = 0;
-		for(int i = posX-1;i < posX+1;i++){
-			for(int j = posY-1;j < posY+1;j++){
-				if(i>=0&&i<LAND_SIZE&&j>=0&&j<LAND_SIZE) count+=getCell(i,j).state;
+		for(int i = posX-1;i <= posX+1;i++){
+			for(int j = posY-1;j <= posY+1;j++){
+				if(i>=0&&i<LAND_SIZE&&j>=0&&j<LAND_SIZE){
+					if(i==posX&&j==posY) count+=0;
+					else count+=getCell(i,j).getState();
+					}
 			}
 		}
 		return count;
@@ -49,7 +55,7 @@ public class Land
 		return land[posX][posY];
 	}
 	public int zeroOne(){
-		if(Math.random()<0.5) return 0;
+		if(Math.random()<0.9) return 0;
 		else return 1;
 	}
 }

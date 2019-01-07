@@ -1,5 +1,4 @@
 package com.dobando.golly.Game;
-
 //细胞
 public class Cell
 {
