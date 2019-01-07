@@ -7,6 +7,9 @@ public class Land
 	public int LAND_SIZE;
 	//二维矩阵-生存空间
 	public Cell[][] land;
+	public int days = 0;
+	public int deadCell = 0,aliveCell = 0;
+	
 	
 	public Land(int size){
 		this.LAND_SIZE = size;
@@ -23,16 +26,20 @@ public class Land
 		}
 	}
 	public void renovateLand(){
+		days++;
+		deadCell = aliveCell = 0;
 		for(int i = 0;i < LAND_SIZE;i++){
 			for(int j = 0;j < LAND_SIZE;j++){
 				Cell theCell = land[i][j];
 				int n = getCellCount(i,j);
 				if(theCell.getState()==1){
+					aliveCell++;
 					if(n<2) theCell.toDie();
 					else if(n==2||n==3) theCell.toLife();
 					else if(n>3) theCell.toDie();
 				}
 				else if(theCell.getState()==0){
+					deadCell++;
 					if(n==3) theCell.toLife();
 				}
 			}

@@ -12,14 +12,16 @@ import com.dobando.golly.Game.Land;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder holder;
-    private RenderThread renderThread;
+    public RenderThread renderThread;
     private boolean isDraw = false;// 控制绘制的开关
 	private Land land;
+	private Context ct;
 
     public GameView(Context context) {
         super(context);
         holder = this.getHolder();
         holder.addCallback(this);
+		ct = context;
 
         renderThread = new RenderThread();
     }
@@ -52,17 +54,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         @Override
         public void run() {
             // 不停绘制界面
-            while (isDraw) {
-                drawUI();
-				land.renovateLand();
+			super.run();
+            while (true) {
+				if(isDraw){
+					drawUI();
+					land.renovateLand();
+					}
 				try
 				{
 					this.sleep(500);
 				}
 				catch (InterruptedException e)
-				{}
+				{
+					e.printStackTrace();
+				}
             }
-            super.run();
         }
     }
 
@@ -105,4 +111,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 			}
 		}
     }
+	
+	public void showInfo(){
+	}
+	
+	public void stopGame(){
+		isDraw = false;
+	}
+	public void startGame(){
+		isDraw = true;
+	}
 }
