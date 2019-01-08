@@ -10,6 +10,8 @@ import android.widget.LinearLayout.LayoutParams;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.os.Handler;
+import android.os.Message;
 
 public class MainActivity extends Activity  implements View.OnClickListener
 {
@@ -22,7 +24,6 @@ public class MainActivity extends Activity  implements View.OnClickListener
 	private Button start;
 	public TextView gameInfo;
 	
-	public StringBuilder info;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,7 +35,7 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		width = display.getWidth();
 		height = display.getHeight();
 		ml = (LinearLayout)findViewById(R.id.mainLinearLayout1);
-		landView = new GameView(MainActivity.this);
+		landView = new GameView(MainActivity.this,this);
 		stop = (Button)findViewById(R.id.stop);
 		start = (Button)findViewById(R.id.start);
 		stop.setOnClickListener(this);
@@ -42,7 +43,7 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		ml.setLayoutParams(new LayoutParams(width,width));
 		ml.addView(landView);
 		
-		info.append("Golly生命游戏-Land by Dob\n");
+		//info.append("Golly生命游戏-Land by Dob\n");
     }
 
 	@Override
@@ -56,13 +57,5 @@ public class MainActivity extends Activity  implements View.OnClickListener
 				landView.startGame();
 				break;
 		}
-	}
-	public void showInfo(){
-		runOnUiThread(new Runnable(){
-			@Override
-			public void run(){
-				
-			}
-		});
 	}
 }

@@ -8,6 +8,11 @@ import android.graphics.Paint;
 import android.graphics.Color;
 import com.dobando.golly.MainActivity;
 import com.dobando.golly.Game.Land;
+import android.os.Handler;
+import android.os.Message;
+import android.app.Activity;
+import android.widget.TextView;
+import com.dobando.golly.R;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -16,12 +21,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private boolean isDraw = false;// 控制绘制的开关
 	private Land land;
 	private Context ct;
+	private Activity mainAct;
+	private TextView text;
+	
+	public StringBuilder info = new StringBuilder();
 
-    public GameView(Context context) {
+    public GameView(Context context,Activity theAct) {
         super(context);
         holder = this.getHolder();
         holder.addCallback(this);
 		ct = context;
+		mainAct = theAct;
+		text = (TextView)theAct.findViewById(R.id.gameInfo);
+		//info.append("Golly生命游戏-Land by Dob\n");
 
         renderThread = new RenderThread();
     }
@@ -59,6 +71,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 				if(isDraw){
 					drawUI();
 					land.renovateLand();
+					info.setLength(0);
+					info.append("Golly生命游戏-Land by Dob\n")
+					      .append("Days:"+land.days+"\n")
+						  .append("死亡细胞:"+land.deadCell+"  存活细胞:"+land.aliveCell);
+					updateGameInfo();
 					}
 				try
 				{
@@ -112,7 +129,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		}
     }
 	
-	public void showInfo(){
+	public void updateGameInfo(){
+		mainAct.runOnUiThread(new Runnable(){
+			@Override
+			public void run(){
+				text.setText(info);
+			}
+		});
 	}
 	
 	public void stopGame(){
