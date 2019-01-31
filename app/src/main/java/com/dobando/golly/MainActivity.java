@@ -12,9 +12,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.view.*;
 
 public class MainActivity extends Activity  implements View.OnClickListener
 {
+
 	public static int width;
 	public static int height;
 	
@@ -58,4 +61,21 @@ public class MainActivity extends Activity  implements View.OnClickListener
 				break;
 		}
 	}
+
+	@Override
+	protected void onStart()
+	{
+		// TODO: Implement this method
+		super.onStart();
+	}
+
+	@Override
+	protected void onStop()
+	{
+		// TODO: Implement this method
+		super.onStop();
+		Log.d("MainActivity","onStop");
+		landView.isDraw = false;
+	}
+	
 }

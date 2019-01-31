@@ -13,16 +13,20 @@ import android.os.Message;
 import android.app.Activity;
 import android.widget.TextView;
 import com.dobando.golly.R;
+import android.view.*;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder holder;
     public RenderThread renderThread;
-    private boolean isDraw = false;// 控制绘制的开关
-	private Land land;
+    public boolean isDraw = false;// 控制绘制的开关
+	public int created = 0;
+	public Land land;
+	private Land lastLand;
 	private Context ct;
 	private Activity mainAct;
 	private TextView text;
+	public int cellSize = 2;
 	
 	public StringBuilder info = new StringBuilder();
 
@@ -45,21 +49,24 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         isDraw = true;
-		land = new Land(MainActivity.width/16);
+		created++;
+		if(created==1){
+		land = new Land(MainActivity.width/cellSize);
         renderThread.start();
-
+		}
+		else land = lastLand;
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         isDraw = false;
-
+		lastLand = land;
     }
 
     /**
 	 * 绘制界面的线程
 	 * 
-	 * @author Administrator
+	 * @author Dobando
 	 * 
 	 */
     private class RenderThread extends Thread {
@@ -69,17 +76,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 			super.run();
             while (true) {
 				if(isDraw){
-					drawUI();
 					land.renovateLand();
+					drawUI();
 					info.setLength(0);
 					info.append("Golly生命游戏-Land by Dob\n")
 					      .append("Days:"+land.days+"\n")
-						  .append("死亡细胞:"+land.deadCell+"  存活细胞:"+land.aliveCell);
+						  .append("剩余空间:"+land.deadCell+"  存活细胞:"+land.aliveCell);
 					updateGameInfo();
 					}
 				try
 				{
-					this.sleep(500);
+					this.sleep(0);
 				}
 				catch (InterruptedException e)
 				{
@@ -106,6 +113,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private void drawCanvas(Canvas canvas) {
         // 在 canvas 上绘制需要的图形
 		Paint paint = new Paint();
+		int size = cellSize;
         //设置抗锯齿
         paint.setAntiAlias(true);
         //设置画笔宽度
@@ -118,11 +126,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 			for(int j = 0;j < land.LAND_SIZE;j++){
 				if(land.getCell(i,j).getState()==1){
 					paint.setColor(Color.BLACK);
-					canvas.drawRect(i*16,j*16,i*16+16,j*16+16,paint);
+					canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
 					}
 				else{
 					paint.setColor(Color.WHITE);
-					canvas.drawRect(i*16,j*16,i*16+16,j*16+16,paint);
+					canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
 					
 				}
 			}
@@ -136,6 +144,27 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 				text.setText(info);
 			}
 		});
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event)
+	{
+		switch(event.getAction()){
+			case MotionEvent.ACTION_DOWN:
+			case MotionEvent.ACTION_MOVE:
+			case MotionEvent.ACTION_UP:
+				int strokeSize = 3;
+				int posX = (int)(event.getX()/cellSize),posY = (int)(event.getY()/cellSize);
+				
+					for(int i = posX-strokeSize;i<=posX+strokeSize;i++)
+					for(int j = posY-strokeSize;j<=posY+strokeSize;j++)
+						if(i>=0&&i<land.LAND_SIZE&&j>=0&&j<land.LAND_SIZE){
+					  land.getCell(i,j).toLife();}
+					drawUI();
+			break;
+				
+		}
+		return false;
 	}
 	
 	public void stopGame(){

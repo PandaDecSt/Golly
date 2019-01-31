@@ -10,7 +10,6 @@ public class Land
 	public int days = 0;
 	public int deadCell = 0,aliveCell = 0;
 	
-	
 	public Land(int size){
 		this.LAND_SIZE = size;
 		land = new Cell[LAND_SIZE][LAND_SIZE];
@@ -62,7 +61,7 @@ public class Land
 		return land[posX][posY];
 	}
 	public int zeroOne(){
-		if(Math.random()<0.9) return 0;
+		if(Math.random()<0.97) return 0;
 		else return 1;
 	}
 }
