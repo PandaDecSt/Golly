@@ -2,10 +2,21 @@ package com.dobando.golly.Game;
 //细胞
 public class Cell
 {
-	final int STATE_DEAD = 0;
-	final int STATE_LIVELY = 1;
+	static final int TYPE_CELL = 0;
+	static final int TYPE_NODE =1;
 	
+	static final int STATE_DEAD = 0;
+	static final int STATE_LIVELY = 1;
+	
+	static final int DIRECTION_UP = 1;
+	static final int DIRECTION_DOWN = -1;
+	static final int DIRECTION_LEFT = 2;
+	static final int DIRECTION_RIGHT = -2;
+	
+	
+	int type;
 	int state;
+	int direction;
 	
 	Cell(int s){
 		this.state = s;

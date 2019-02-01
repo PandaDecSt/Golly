@@ -34,19 +34,67 @@
 		<LinearLayout
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
-			android:orientation="horizontal">
+			android:orientation="vertical">
 
-			<Button
-				android:id="@+id/stop"
-				android:layout_width="wrap_content"
+			<LinearLayout
 				android:layout_height="wrap_content"
-				android:text="@string/stop"/>
+				android:layout_width="wrap_content"
+				android:orientation="horizontal">
 
-			<Button
-				android:id="@+id/start"
-				android:layout_width="wrap_content"
+				<Button
+					android:id="@+id/stop"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/stop"/>
+
+				<Button
+					android:id="@+id/start"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/start"/>
+
+				<Button
+					android:id="@+id/move_up"
+					android:layout_height="wrap_content"
+					android:layout_width="50dp"
+					android:text="↑"/>
+
+				<Button
+					android:id="@+id/move_down"
+					android:layout_height="wrap_content"
+					android:layout_width="50dp"
+					android:text="↓"/>
+
+			</LinearLayout>
+
+			<LinearLayout
 				android:layout_height="wrap_content"
-				android:text="@string/start"/>
+				android:layout_width="wrap_content"
+				android:orientation="horizontal">
+
+				<Button
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="@string/clear"/>
+
+				<Button
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:text="@string/reset"/>
+
+				<Button
+					android:id="@+id/move_left"
+					android:layout_height="wrap_content"
+					android:layout_width="50dp"
+					android:text="←"/>
+
+				<Button
+					android:id="@+id/move_right"
+					android:layout_height="wrap_content"
+					android:layout_width="50dp"
+					android:text="→"/>
+
+			</LinearLayout>
 
 		</LinearLayout>
 

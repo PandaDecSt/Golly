@@ -7,6 +7,8 @@
 		
 	<string name="stop">暂停</string>
 	<string name="start">开始</string>
+	<string name="clear">清空</string>
+	<string name="reset">重置</string>
 	
 
 </resources>

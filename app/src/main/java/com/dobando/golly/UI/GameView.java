@@ -13,7 +13,7 @@ import android.os.Message;
 import android.app.Activity;
 import android.widget.TextView;
 import com.dobando.golly.R;
-import android.view.*;
+import android.view.MotionEvent;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -26,7 +26,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	private Context ct;
 	private Activity mainAct;
 	private TextView text;
-	public int cellSize = 2;
+	public int cellSize = 5;
 	
 	public StringBuilder info = new StringBuilder();
 

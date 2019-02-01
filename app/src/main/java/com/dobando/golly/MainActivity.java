@@ -27,6 +27,8 @@ public class MainActivity extends Activity  implements View.OnClickListener
 	private Button start;
 	public TextView gameInfo;
 	
+	private Button up,down,left,right;
+	
 	
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,8 +43,16 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		landView = new GameView(MainActivity.this,this);
 		stop = (Button)findViewById(R.id.stop);
 		start = (Button)findViewById(R.id.start);
+		up = (Button)findViewById(R.id.move_up);
+		down = (Button)findViewById(R.id.move_down);
+		left = (Button)findViewById(R.id.move_left);
+		right = (Button)findViewById(R.id.move_right);
 		stop.setOnClickListener(this);
 		start.setOnClickListener(this);
+		up.setOnClickListener(this);
+		down.setOnClickListener(this);
+		left.setOnClickListener(this);
+		right.setOnClickListener(this);
 		ml.setLayoutParams(new LayoutParams(width,width));
 		ml.addView(landView);
 		
@@ -58,6 +68,18 @@ public class MainActivity extends Activity  implements View.OnClickListener
 				break;
 			case R.id.start:
 				landView.startGame();
+				break;
+			case R.id.move_up:
+				
+				break;
+			case R.id.move_down:
+				
+				break;
+			case R.id.move_left:
+				
+				break;
+			case R.id.move_right:
+				
 				break;
 		}
 	}
