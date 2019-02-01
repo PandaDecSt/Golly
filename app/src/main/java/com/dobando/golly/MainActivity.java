@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.*;
+import com.dobando.golly.Game.Cell;
 
 public class MainActivity extends Activity  implements View.OnClickListener
 {
@@ -28,6 +29,7 @@ public class MainActivity extends Activity  implements View.OnClickListener
 	public TextView gameInfo;
 	
 	private Button up,down,left,right;
+	private int direction;
 	
 	
     @Override
@@ -70,16 +72,16 @@ public class MainActivity extends Activity  implements View.OnClickListener
 				landView.startGame();
 				break;
 			case R.id.move_up:
-				
+				direction = Cell.DIRECTION_UP;
 				break;
 			case R.id.move_down:
-				
+				direction = Cell.DIRECTION_DOWN;
 				break;
 			case R.id.move_left:
-				
+				direction = Cell.DIRECTION_LEFT;
 				break;
 			case R.id.move_right:
-				
+				direction = Cell.DIRECTION_RIGHT;
 				break;
 		}
 	}

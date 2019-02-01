@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.widget.TextView;
 import com.dobando.golly.R;
 import android.view.MotionEvent;
+import com.dobando.golly.Game.Cell;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -124,14 +125,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         //paint.setStyle(Paint.Style.STROKE);
 		for(int i = 0;i < land.LAND_SIZE;i++){
 			for(int j = 0;j < land.LAND_SIZE;j++){
-				if(land.getCell(i,j).getState()==1){
+				Cell theCell = land.getCell(i,j);
+				if(theCell.getType()==Cell.TYPE_CELL){
+				if(theCell.getState()==1){
 					paint.setColor(Color.BLACK);
 					canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
 					}
 				else{
 					paint.setColor(Color.WHITE);
 					canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
-					
+				}}
+				else if(theCell.getType()==Cell.TYPE_NODE){
+					if(theCell.getState()==Cell.STATE_LIVELY){
+						paint.setColor(Color.GREEN);
+						canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
+					}
 				}
 			}
 		}
