@@ -21,11 +21,9 @@ public class Snake
 	
 	public void move(int direction){
 		SnakeNode head = snakeBody.get(snakeBody.size()-1);
-		ArrayList<SnakeNode> newSnake = new ArrayList<SnakeNode>();
-		SnakeNode newHead = head;
-		for(int i = 1;i < snakeBody.size();i++){
-			newSnake.add(snakeBody.get(i));
-		}
+		ArrayList<SnakeNode> newSnake = snakeBody;
+		SnakeNode newHead = new SnakeNode(head.posX,head.posY,head.direction);
+		newSnake.remove(0);
 		switch(direction){
 			case SnakeNode.DIRECTION_UP:
 				newHead.posY--;

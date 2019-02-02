@@ -128,7 +128,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		for(int i = 0;i < land.LAND_SIZE;i++){
 			for(int j = 0;j < land.LAND_SIZE;j++){
 				Cell theCell = land.getCell(i,j);
-				if(!land.snake.isThePostionSnake(i,j)){
 				if(theCell.getState()==1){
 					paint.setColor(Color.BLACK);
 					canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
@@ -137,7 +136,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 					paint.setColor(Color.WHITE);
 					canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
 				}
-			}
 			}
 		}
 		drawSnake(canvas);
