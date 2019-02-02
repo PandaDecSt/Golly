@@ -144,7 +144,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 	
 	public void drawSnake(Canvas canvas){
-		canvas.drawColor(Color.WHITE);
+		//canvas.drawColor(Color.WHITE);
 		Paint paint = new Paint();
 		paint.setAntiAlias(true);
         paint.setStrokeWidth(5);
