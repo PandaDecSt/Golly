@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.dobando.golly.R;
 import android.view.MotionEvent;
 import com.dobando.golly.Game.Cell;
+import com.dobando.golly.Game.SnakeNode;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -24,6 +25,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	public int created = 0;
 	public Land land;
 	private Land lastLand;
+	public Canvas canvas;
 	private Context ct;
 	private Activity mainAct;
 	private TextView text;
@@ -101,7 +103,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	 * 界面绘制
 	 */
     public void drawUI() {
-        Canvas canvas = holder.lockCanvas();
+        canvas = holder.lockCanvas();
         try {
             drawCanvas(canvas);
         } catch (Exception e) {
@@ -126,7 +128,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		for(int i = 0;i < land.LAND_SIZE;i++){
 			for(int j = 0;j < land.LAND_SIZE;j++){
 				Cell theCell = land.getCell(i,j);
-				if(theCell.getType()==Cell.TYPE_CELL){
+				if(!land.snake.isThePostionSnake(i,j)){
 				if(theCell.getState()==1){
 					paint.setColor(Color.BLACK);
 					canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
@@ -134,16 +136,32 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 				else{
 					paint.setColor(Color.WHITE);
 					canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
-				}}
-				else if(theCell.getType()==Cell.TYPE_NODE){
-					if(theCell.getState()==Cell.STATE_LIVELY){
-						paint.setColor(Color.GREEN);
-						canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
-					}
 				}
 			}
+			}
 		}
+		drawSnake(canvas);
     }
+	
+	public void drawSnake(Canvas canvas){
+		canvas.drawColor(Color.WHITE);
+		Paint paint = new Paint();
+		paint.setAntiAlias(true);
+        paint.setStrokeWidth(5);
+        paint.setColor(Color.GRAY);
+		int nowLength = land.snake.snakeBody.size();
+		for(int i = 0;i<nowLength;i++){
+			SnakeNode theNode = land.snake.snakeBody.get(i);
+			if(i==nowLength-1){
+				paint.setColor(Color.RED);
+				canvas.drawRect(theNode.posX*cellSize,theNode.posY*cellSize,theNode.posX*cellSize+cellSize,theNode.posY*cellSize+cellSize,paint);
+				}
+			else{
+				paint.setColor(Color.YELLOW);
+				canvas.drawRect(theNode.posX*cellSize,theNode.posY*cellSize,theNode.posX*cellSize+cellSize,theNode.posY*cellSize+cellSize,paint);
+				}
+		}
+	}
 	
 	public void updateGameInfo(){
 		mainAct.runOnUiThread(new Runnable(){

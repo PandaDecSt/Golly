@@ -15,6 +15,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.*;
 import com.dobando.golly.Game.Cell;
+import com.dobando.golly.Game.SnakeNode;
 
 public class MainActivity extends Activity  implements View.OnClickListener
 {
@@ -24,12 +25,11 @@ public class MainActivity extends Activity  implements View.OnClickListener
 	
 	private LinearLayout ml;
 	private GameView landView;
-	private Button stop;
-	private Button start;
+	private Button stop,start,clear,reset;
 	public TextView gameInfo;
 	
 	private Button up,down,left,right;
-	private int direction;
+	
 	
 	
     @Override
@@ -45,25 +45,29 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		landView = new GameView(MainActivity.this,this);
 		stop = (Button)findViewById(R.id.stop);
 		start = (Button)findViewById(R.id.start);
+		clear = (Button)findViewById(R.id.clear);
+		reset = (Button)findViewById(R.id.reset);
 		up = (Button)findViewById(R.id.move_up);
 		down = (Button)findViewById(R.id.move_down);
 		left = (Button)findViewById(R.id.move_left);
 		right = (Button)findViewById(R.id.move_right);
 		stop.setOnClickListener(this);
 		start.setOnClickListener(this);
+		clear.setOnClickListener(this);
+		reset.setOnClickListener(this);
 		up.setOnClickListener(this);
 		down.setOnClickListener(this);
 		left.setOnClickListener(this);
 		right.setOnClickListener(this);
 		ml.setLayoutParams(new LayoutParams(width,width));
 		ml.addView(landView);
-		
 		//info.append("Golly生命游戏-Land by Dob\n");
     }
 
 	@Override
 	public void onClick(View p1)
 	{
+		int direction = 0;
 		switch(p1.getId()){
 			case R.id.stop:
 				landView.stopGame();
@@ -71,18 +75,30 @@ public class MainActivity extends Activity  implements View.OnClickListener
 			case R.id.start:
 				landView.startGame();
 				break;
+			case R.id.clear:
+				landView.land.initializeLand(1);
+				break;
+			case R.id.reset:
+				landView.land.initializeLand(0.97);
+				break;
 			case R.id.move_up:
-				direction = Cell.DIRECTION_UP;
+				direction = SnakeNode.DIRECTION_UP;
 				break;
 			case R.id.move_down:
-				direction = Cell.DIRECTION_DOWN;
+				direction = SnakeNode.DIRECTION_DOWN;
 				break;
 			case R.id.move_left:
-				direction = Cell.DIRECTION_LEFT;
+				direction = SnakeNode.DIRECTION_LEFT;
 				break;
 			case R.id.move_right:
-				direction = Cell.DIRECTION_RIGHT;
+				direction = SnakeNode.DIRECTION_RIGHT;
 				break;
+		}
+		if(direction!=0){
+			//调用🐍移动的方法
+			landView.land.snake.move(direction);
+			landView.drawSnake(landView.canvas);
+			Log.d("Snake",landView.land.snake.toString());
 		}
 	}
 
