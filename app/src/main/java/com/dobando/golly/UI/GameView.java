@@ -40,8 +40,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		ct = context;
 		mainAct = theAct;
 		text = (TextView)theAct.findViewById(R.id.gameInfo);
-		//info.append("Golly生命游戏-Land by Dob\n");
-
         renderThread = new RenderThread();
     }
 
@@ -124,8 +122,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         paint.setStrokeWidth(5);
         //设置画笔颜色
         paint.setColor(Color.YELLOW);
-        //设置画笔样式
-        //paint.setStyle(Paint.Style.STROKE);
 		canvas.drawColor(Color.WHITE);
 		for(int i = 0;i < land.LAND_SIZE;i++){
 			for(int j = 0;j < land.LAND_SIZE;j++){
@@ -140,7 +136,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 	
 	public void drawSnake(Canvas canvas){
-		//canvas.drawColor(Color.WHITE);
 		Paint paint = new Paint();
 		paint.setAntiAlias(true);
         paint.setStrokeWidth(5);

@@ -72,31 +72,6 @@ public class Land
 		return land[posX][posY];
 	}
 	
-	/*public void moveSnake(int direction){
-		Cell head = snake.getSnakeHead();
-		ArrayList<Cell> newSnake = new ArrayList<Cell>();
-		Cell newHead = head;
-		for(int i =1;i<snake.body.size();i++){
-			newSnake.add(snake.body.get(i));
-		}
-		newHead.direction = direction;
-		switch(direction){
-			case Cell.DIRECTION_UP:
-				newHead.posY--;
-				break;
-			case Cell.DIRECTION_DOWN:
-				newHead.posY++;
-				break;
-			case Cell.DIRECTION_LEFT:
-				newHead.posX--;
-				break;
-			case Cell.DIRECTION_RIGHT:
-				newHead.posX++;
-				break;
-		}
-		snake.body = newSnake;
-	}
-	*/
 	public int zeroOne(double p){
 		if(Math.random()<p) return 0;
 		else return 1;

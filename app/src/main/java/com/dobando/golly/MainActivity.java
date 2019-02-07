@@ -60,7 +60,6 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		right.setOnClickListener(this);
 		ml.setLayoutParams(new LayoutParams(width,width));
 		ml.addView(landView);
-		//info.append("Golly生命游戏-Land by Dob\n");
     }
 
 	@Override
