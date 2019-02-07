@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Snake
 {
 	
-	public int length = 10;
+	public int length = 20;
 	public ArrayList<SnakeNode> snakeBody;
 	
 	Snake(){
@@ -17,6 +17,10 @@ public class Snake
 		for(int i = 0;i<length;i++){
 			snakeBody.add(new SnakeNode(i,0,SnakeNode.DIRECTION_RIGHT));
 		}
+	}
+	
+	public SnakeNode getHead(){
+		return snakeBody.get(snakeBody.size()-1);
 	}
 	
 	public void move(int direction){
@@ -38,6 +42,8 @@ public class Snake
 				newHead.posX++;
 				break;
 		}
+		if(newHead.direction+direction!=0)
+		newHead.direction = direction;
 		newSnake.add(newHead);
 		snakeBody =newSnake;
 	}

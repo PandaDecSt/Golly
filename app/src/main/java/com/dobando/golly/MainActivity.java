@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.*;
 import com.dobando.golly.Game.Cell;
 import com.dobando.golly.Game.SnakeNode;
 
@@ -97,8 +96,6 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		if(direction!=0){
 			//调用🐍移动的方法
 			landView.land.snake.move(direction);
-			landView.drawSnake(landView.canvas);
-			Log.d("Snake",landView.land.snake.toString());
 		}
 	}
 

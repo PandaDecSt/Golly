@@ -81,6 +81,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 				if(isDraw){
 					land.renovateLand();
 					drawUI();
+					land.snake.move(land.snake.getHead().direction);
 					info.setLength(0);
 					info.append("Golly生命游戏-Land by Dob\n")
 					      .append("Days:"+land.days+"\n")
@@ -125,6 +126,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(Color.YELLOW);
         //设置画笔样式
         //paint.setStyle(Paint.Style.STROKE);
+		canvas.drawColor(Color.WHITE);
 		for(int i = 0;i < land.LAND_SIZE;i++){
 			for(int j = 0;j < land.LAND_SIZE;j++){
 				Cell theCell = land.getCell(i,j);
@@ -132,10 +134,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 					paint.setColor(Color.BLACK);
 					canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
 					}
-				else{
-					paint.setColor(Color.WHITE);
-					canvas.drawRect(i*size,j*size,i*size+size,j*size+size,paint);
-				}
 			}
 		}
 		drawSnake(canvas);
@@ -155,7 +153,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 				canvas.drawRect(theNode.posX*cellSize,theNode.posY*cellSize,theNode.posX*cellSize+cellSize,theNode.posY*cellSize+cellSize,paint);
 				}
 			else{
-				paint.setColor(Color.YELLOW);
+				paint.setColor(Color.BLUE);
 				canvas.drawRect(theNode.posX*cellSize,theNode.posY*cellSize,theNode.posX*cellSize+cellSize,theNode.posY*cellSize+cellSize,paint);
 				}
 		}
