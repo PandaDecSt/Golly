@@ -20,6 +20,13 @@ public class Land
 		snake = new Snake();
 	}
 	
+	public void check(){
+		int posX = snake.getHead().posX,posY = snake.getHead().posY;
+		if(posX<=-1||posX>=LAND_SIZE||posY<=-1||posY>=LAND_SIZE){
+			snake.init();
+		}
+	}
+	
 	public void initializeLand(double p){
 		for(int i = 0;i < LAND_SIZE;i++){
 			for(int j = 0;j < LAND_SIZE;j++){

@@ -78,6 +78,7 @@ public class MainActivity extends Activity  implements View.OnClickListener
 				break;
 			case R.id.reset:
 				landView.land.initializeLand(0.97);
+				landView.land.snake.init();
 				break;
 			case R.id.move_up:
 				direction = SnakeNode.DIRECTION_UP;

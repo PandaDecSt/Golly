@@ -5,15 +5,15 @@ import java.util.ArrayList;
 public class Snake
 {
 	
-	public int length = 20;
+	public int length = 5;
 	public ArrayList<SnakeNode> snakeBody;
 	
 	Snake(){
-		snakeBody = new ArrayList<SnakeNode>();
 		init();
 	}
 	
-	private void init(){
+	public void init(){
+		snakeBody = new ArrayList<SnakeNode>();
 		for(int i = 0;i<length;i++){
 			snakeBody.add(new SnakeNode(i,0,SnakeNode.DIRECTION_RIGHT));
 		}

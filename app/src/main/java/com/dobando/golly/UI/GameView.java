@@ -18,10 +18,16 @@ import com.dobando.golly.Game.Cell;
 import com.dobando.golly.Game.SnakeNode;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
-
+	
+	public int nowFps;
+	
     private SurfaceHolder holder;
+	//线程
     public RenderThread renderThread;
-    public boolean isDraw = false;// 控制绘制的开关
+	public FpsThread fpsCompute;
+	
+    public boolean isDraw = false;
+	public boolean lock = false;// 控制绘制的开关
 	public int created = 0;
 	public Land land;
 	private Land lastLand;
@@ -29,7 +35,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	private Context ct;
 	private Activity mainAct;
 	private TextView text;
-	public int cellSize = 5;
+	public int cellSize = 10;
 	
 	public StringBuilder info = new StringBuilder();
 
@@ -41,6 +47,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		mainAct = theAct;
 		text = (TextView)theAct.findViewById(R.id.gameInfo);
         renderThread = new RenderThread();
+		fpsCompute = new FpsThread();
     }
 
     @Override
@@ -50,10 +57,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         isDraw = true;
+		lock = true;
 		created++;
 		if(created==1){
 		land = new Land(MainActivity.width/cellSize);
         renderThread.start();
+		fpsCompute.start();
 		}
 		else land = lastLand;
     }
@@ -61,6 +70,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         isDraw = false;
+		lock = false;
 		lastLand = land;
     }
 
@@ -77,12 +87,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 			super.run();
             while (true) {
 				if(isDraw){
+					fpsCompute.count();
 					land.renovateLand();
 					drawUI();
 					land.snake.move(land.snake.getHead().direction);
+					land.check();
 					info.setLength(0);
 					info.append("Golly生命游戏-Land by Dob\n")
-					      .append("Days:"+land.days+"\n")
+					      .append("Days:"+land.days+" "+"FPS:"+nowFps+"\n")
 						  .append("剩余空间:"+land.deadCell+"  存活细胞:"+land.aliveCell);
 					updateGameInfo();
 					}
@@ -97,6 +109,33 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
     }
+	
+	private class FpsThread extends Thread
+	{
+		int fps = 0;
+		@Override
+		public void run()
+		{
+			super.run();
+			while(lock){
+				nowFps = fps;
+				fps = 0;
+				try
+				{
+				this.sleep(1000);
+				}
+				catch (InterruptedException e)
+				{
+				e.printStackTrace();
+				}
+			}
+		}
+		
+		public void count(){
+			fps++;
+		}
+		
+	}
 
     /**
 	 * 界面绘制
@@ -166,22 +205,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
+		int strokeSize = 3;
+		int posX = (int)(event.getX()/cellSize),posY = (int)(event.getY()/cellSize);
 		switch(event.getAction()){
-			case MotionEvent.ACTION_DOWN:
 			case MotionEvent.ACTION_MOVE:
-			case MotionEvent.ACTION_UP:
-				int strokeSize = 3;
-				int posX = (int)(event.getX()/cellSize),posY = (int)(event.getY()/cellSize);
-				
-					for(int i = posX-strokeSize;i<=posX+strokeSize;i++)
-					for(int j = posY-strokeSize;j<=posY+strokeSize;j++)
-						if(i>=0&&i<land.LAND_SIZE&&j>=0&&j<land.LAND_SIZE){
-					  land.getCell(i,j).toLife();}
+				for(int i = posX-strokeSize;i<=posX+strokeSize;i++){
+				for(int j = posY-strokeSize;j<=posY+strokeSize;j++){
+				if(i>=0&&i<land.LAND_SIZE&&j>=0&&j<land.LAND_SIZE){
+					land.getCell(i,j).toLife();
+					}}}
 					drawUI();
-			break;
-				
-		}
-		return false;
+				break;
+				}
+		return true;
 	}
 	
 	public void stopGame(){
