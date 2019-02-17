@@ -63,6 +63,14 @@ public class MainActivity extends Activity  implements View.OnClickListener
     }
 
 	@Override
+	protected void onResume()
+	{
+		super.onResume();
+	}
+
+	
+	
+	@Override
 	public void onClick(View p1)
 	{
 		int direction = 0;

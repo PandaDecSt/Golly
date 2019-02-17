@@ -25,6 +25,13 @@ public class Land
 		if(posX<=-1||posX>=LAND_SIZE||posY<=-1||posY>=LAND_SIZE){
 			snake.init();
 		}
+		if(posX>=0&&posX<LAND_SIZE&&posY>=0&&posY<LAND_SIZE){
+			Cell theCell = getCell(posX,posY);
+			if(theCell.getState()==Cell.STATE_LIVELY){
+				snake.addHead();
+				theCell.toDie();
+				}
+		}
 	}
 	
 	public void initializeLand(double p){

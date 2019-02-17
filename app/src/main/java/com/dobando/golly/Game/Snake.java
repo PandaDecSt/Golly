@@ -45,7 +45,28 @@ public class Snake
 		if(newHead.direction+direction!=0)
 		newHead.direction = direction;
 		newSnake.add(newHead);
-		snakeBody =newSnake;
+		snakeBody = newSnake;
+	}
+	
+	public void addHead(){
+		SnakeNode head = getHead();
+		SnakeNode newHead = new SnakeNode(head.posX,head.posY,head.direction);
+		int direction = head.direction;
+		switch(direction){
+			case SnakeNode.DIRECTION_UP:
+				newHead.posY--;
+				break;
+			case SnakeNode.DIRECTION_DOWN:
+				newHead.posY++;
+				break;
+			case SnakeNode.DIRECTION_LEFT:
+				newHead.posX--;
+				break;
+			case SnakeNode.DIRECTION_RIGHT:
+				newHead.posX++;
+				break;
+		}
+		snakeBody.add(newHead);
 	}
 	
 	

@@ -27,15 +27,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	public FpsThread fpsCompute;
 	
     public boolean isDraw = false;
-	public boolean lock = false;// 控制绘制的开关
-	public int created = 0;
+	public boolean isStop = false;// 控制绘制的开关
 	public Land land;
 	private Land lastLand;
 	public Canvas canvas;
 	private Context ct;
 	private Activity mainAct;
 	private TextView text;
-	public int cellSize = 10;
+	public int cellSize = 5;
 	
 	public StringBuilder info = new StringBuilder();
 
@@ -56,21 +55,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        isDraw = true;
-		lock = true;
-		created++;
-		if(created==1){
+        isStop = isDraw = true;
 		land = new Land(MainActivity.width/cellSize);
         renderThread.start();
 		fpsCompute.start();
-		}
-		else land = lastLand;
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        isDraw = false;
-		lock = false;
+        isStop = isDraw = false;
 		lastLand = land;
     }
 
@@ -85,7 +78,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         public void run() {
             // 不停绘制界面
 			super.run();
-            while (true) {
+            while (isStop) {
 				if(isDraw){
 					fpsCompute.count();
 					land.renovateLand();
@@ -117,7 +110,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		public void run()
 		{
 			super.run();
-			while(lock){
+			while(isDraw){
 				nowFps = fps;
 				fps = 0;
 				try
