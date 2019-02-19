@@ -1,10 +1,6 @@
 package com.dobando.golly.Game;
 //细胞
-public class Cell
-{
-	public static final int TYPE_CELL = 0;
-	public static final int TYPE_NODE =1;
-	
+public class Cell {
 	public static final int STATE_DEAD = 0;
 	public static final int STATE_LIVELY = 1;
 	

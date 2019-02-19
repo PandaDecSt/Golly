@@ -62,6 +62,7 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		ml.addView(landView);
     }
 
+	
 	@Override
 	protected void onResume()
 	{
@@ -115,12 +116,30 @@ public class MainActivity extends Activity  implements View.OnClickListener
 	}
 
 	@Override
+	protected void onPause()
+	{
+		// TODO: Implement this method
+		super.onPause();
+		landView.isStop = false;
+		landView.isDraw = false;
+		Log.d("MainActivity","onPause");
+	}
+	
+	@Override
 	protected void onStop()
 	{
 		// TODO: Implement this method
 		super.onStop();
 		Log.d("MainActivity","onStop");
-		landView.isDraw = false;
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+		// TODO: Implement this method
+		super.onDestroy();
+		Log.d("MainActivity","onDestroy");
 	}
 	
 }
+

@@ -6,20 +6,23 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Color;
-import com.dobando.golly.MainActivity;
-import com.dobando.golly.Game.Land;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
+import android.util.Log;
 import android.widget.TextView;
-import com.dobando.golly.R;
 import android.view.MotionEvent;
 import com.dobando.golly.Game.Cell;
 import com.dobando.golly.Game.SnakeNode;
+import com.dobando.golly.MainActivity;
+import com.dobando.golly.Game.Land;
+import com.dobando.golly.R;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	
 	public int nowFps;
+	
+	private final String TAG = "GameView";
 	
     private SurfaceHolder holder;
 	//线程
@@ -29,7 +32,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public boolean isDraw = false;
 	public boolean isStop = false;// 控制绘制的开关
 	public Land land;
-	private Land lastLand;
 	public Canvas canvas;
 	private Context ct;
 	private Activity mainAct;
@@ -57,14 +59,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         isStop = isDraw = true;
 		land = new Land(MainActivity.width/cellSize);
+		Log.d(TAG,"启动线程中");
         renderThread.start();
 		fpsCompute.start();
+		Log.d(TAG,"线程启动完毕");
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        isStop = isDraw = false;
-		lastLand = land;
+		Log.d(TAG,"线程已关闭");
     }
 
     /**
@@ -110,7 +113,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		public void run()
 		{
 			super.run();
-			while(isDraw){
+			while(isStop){
 				nowFps = fps;
 				fps = 0;
 				try
