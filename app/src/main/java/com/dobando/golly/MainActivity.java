@@ -15,6 +15,7 @@ import android.os.Message;
 import android.util.Log;
 import com.dobando.golly.Game.Cell;
 import com.dobando.golly.Game.SnakeNode;
+import android.widget.EditText;
 
 public class MainActivity extends Activity  implements View.OnClickListener
 {
@@ -28,6 +29,9 @@ public class MainActivity extends Activity  implements View.OnClickListener
 	public TextView gameInfo;
 	
 	private Button up,down,left,right;
+	private EditText input_text;
+	private Button bt_add;
+	
 	
 	
 	
@@ -50,6 +54,8 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		down = (Button)findViewById(R.id.move_down);
 		left = (Button)findViewById(R.id.move_left);
 		right = (Button)findViewById(R.id.move_right);
+		input_text = findViewById(R.id.input_array);
+		bt_add = findViewById(R.id.bt_add);
 		stop.setOnClickListener(this);
 		start.setOnClickListener(this);
 		clear.setOnClickListener(this);
@@ -58,6 +64,7 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		down.setOnClickListener(this);
 		left.setOnClickListener(this);
 		right.setOnClickListener(this);
+		bt_add.setOnClickListener(this);
 		ml.setLayoutParams(new LayoutParams(width,width));
 		ml.addView(landView);
     }
@@ -101,6 +108,9 @@ public class MainActivity extends Activity  implements View.OnClickListener
 			case R.id.move_right:
 				direction = SnakeNode.DIRECTION_RIGHT;
 				break;
+			case R.id.bt_add:
+				parseInputArrayAndAdd();
+				break;
 		}
 		if(direction!=0){
 			//调用🐍移动的方法
@@ -139,6 +149,10 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		// TODO: Implement this method
 		super.onDestroy();
 		Log.d("MainActivity","onDestroy");
+	}
+	
+	private boolean parseInputArrayAndAdd(){
+		return true;
 	}
 	
 }
