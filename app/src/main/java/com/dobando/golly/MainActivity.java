@@ -86,7 +86,7 @@ public class MainActivity extends Activity  implements View.OnClickListener
 				landView.land.initializeLand(1);
 				break;
 			case R.id.reset:
-				landView.land.initializeLand(0.97);
+				landView.land.initializeLand(0.5);
 				landView.land.snake.init();
 				break;
 			case R.id.move_up:

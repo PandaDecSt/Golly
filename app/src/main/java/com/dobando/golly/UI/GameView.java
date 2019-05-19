@@ -36,7 +36,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	private Context ct;
 	private Activity mainAct;
 	private TextView text;
-	public int cellSize = 5;
+	public static int cellSize = 2;
 	
 	public StringBuilder info = new StringBuilder();
 
@@ -58,7 +58,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         isStop = isDraw = true;
-		land = new Land(MainActivity.width/cellSize);
+		land = new Land(MainActivity.width/cellSize,true);
 		Log.d(TAG,"启动线程中");
         renderThread.start();
 		fpsCompute.start();
@@ -89,7 +89,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 					land.snake.move(land.snake.getHead().direction);
 					land.check();
 					info.setLength(0);
-					info.append("Golly生命游戏-Land by Dob\n")
+					info.append("生命游戏-by Dob\n")
 					      .append("Days:"+land.days+" "+"FPS:"+nowFps+"\n")
 						  .append("剩余空间:"+land.deadCell+"  存活细胞:"+land.aliveCell);
 					updateGameInfo();
@@ -158,8 +158,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         //设置画笔颜色
         paint.setColor(Color.YELLOW);
 		canvas.drawColor(Color.WHITE);
-		for(int i = 0;i < land.LAND_SIZE;i++){
-			for(int j = 0;j < land.LAND_SIZE;j++){
+		for(int i = 0;i < land.size;i++){
+			for(int j = 0;j < land.size;j++){
 				Cell theCell = land.getCell(i,j);
 				if(theCell.getState()==1){
 					paint.setColor(Color.BLACK);
@@ -207,7 +207,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 			case MotionEvent.ACTION_MOVE:
 				for(int i = posX-strokeSize;i<=posX+strokeSize;i++){
 				for(int j = posY-strokeSize;j<=posY+strokeSize;j++){
-				if(i>=0&&i<land.LAND_SIZE&&j>=0&&j<land.LAND_SIZE){
+				if(i>=0&&i<land.size&&j>=0&&j<land.size){
 					land.getCell(i,j).toLife();
 					}}}
 					drawUI();
