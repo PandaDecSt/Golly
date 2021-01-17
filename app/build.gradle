@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.0"
 
     defaultConfig {
-        applicationId "com.dobando.golly"
+        applicationId "com.pandadecst.golly"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1

@@ -1,4 +1,4 @@
-package com.dobando.golly.Game;
+package com.pandadecst.golly.core;
 
 import java.util.ArrayList;
 

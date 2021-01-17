@@ -1,30 +1,26 @@
-package com.dobando.golly;
+package com.pandadecst.golly;
 
 import android.app.Activity;
 import android.os.Bundle;
-import com.dobando.golly.UI.GameView;
-import android.widget.LinearLayout;
-import com.dobando.golly.Game.Land;
+import android.util.Log;
 import android.view.Display;
-import android.widget.LinearLayout.LayoutParams;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import com.dobando.golly.Game.Cell;
-import com.dobando.golly.Game.SnakeNode;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.TextView;
+import com.pandadecst.golly.core.SnakeNode;
+import com.pandadecst.golly.ui.GameView;
 
-public class MainActivity extends Activity  implements View.OnClickListener
+public class MainActivity extends Activity implements View.OnClickListener
 {
 
 	public static int width;
 	public static int height;
 	
 	private LinearLayout ml;
-	private GameView landView;
+	private GameView worldView;
 	private Button stop,start,clear,reset;
 	public TextView gameInfo;
 	
@@ -45,7 +41,7 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		width = display.getWidth();
 		height = display.getHeight();
 		ml = (LinearLayout)findViewById(R.id.mainLinearLayout1);
-		landView = new GameView(MainActivity.this,this);
+		worldView = new GameView(MainActivity.this,this);
 		stop = (Button)findViewById(R.id.stop);
 		start = (Button)findViewById(R.id.start);
 		clear = (Button)findViewById(R.id.clear);
@@ -66,7 +62,7 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		right.setOnClickListener(this);
 		bt_add.setOnClickListener(this);
 		ml.setLayoutParams(new LayoutParams(width,width));
-		ml.addView(landView);
+		ml.addView(worldView);
     }
 
 	
@@ -84,17 +80,17 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		int direction = 0;
 		switch(p1.getId()){
 			case R.id.stop:
-				landView.stopGame();
+				worldView.stopGame();
 				break;
 			case R.id.start:
-				landView.startGame();
+				worldView.startGame();
 				break;
 			case R.id.clear:
-				landView.land.initializeLand(1);
+				worldView.world.clear();
 				break;
 			case R.id.reset:
-				landView.land.initializeLand(0.5);
-				landView.land.snake.init();
+				worldView.world.initializeworld(0.5);
+				worldView.world.snake.init();
 				break;
 			case R.id.move_up:
 				direction = SnakeNode.DIRECTION_UP;
@@ -114,7 +110,7 @@ public class MainActivity extends Activity  implements View.OnClickListener
 		}
 		if(direction!=0){
 			//调用🐍移动的方法
-			landView.land.snake.move(direction);
+			worldView.world.snake.move(direction);
 		}
 	}
 
@@ -130,8 +126,8 @@ public class MainActivity extends Activity  implements View.OnClickListener
 	{
 		// TODO: Implement this method
 		super.onPause();
-		landView.isStop = false;
-		landView.isDraw = false;
+		worldView.isStop = false;
+		worldView.isDraw = false;
 		Log.d("MainActivity","onPause");
 	}
 	
